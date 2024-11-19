@@ -1,0 +1,10 @@
+response 200
+
+{
+    "result":{
+        "id":"string",
+        "diseaseName":"string",
+        "diseaseTreatment":"string",
+        "diseaseDescription":"string"
+    }
+}
