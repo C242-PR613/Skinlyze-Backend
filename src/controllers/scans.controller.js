@@ -1,11 +1,12 @@
 const scan = require("../models/scans.model")
 const predict = require("./ml.controller")
+const isNullOrUndefined = require("./utils/isNullOrUndefined.util")
 
 async function addScan(req, res) {
     let {image_url} = req.body
     //test
     const IMG_URL = "https://gardenerspath.com/wp-content/uploads/2019/08/Frogeye-spots-Botryosphaeria-obtusa-on-apple-leaf-FB.jpg"
-    if(image_url === undefined || image_url === ""){
+    if(isNullOrUndefined(image_url)){
       image_url = IMG_URL
     }
     //test-end
