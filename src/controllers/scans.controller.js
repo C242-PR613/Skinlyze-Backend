@@ -2,6 +2,28 @@ const scan = require("../models/scans.model")
 const isNullOrUndefined = require("./utils/isNullOrUndefined.util")
 const axios = require("axios")
 
+/**
+ * TODO
+ * tambah supaya setelah panggil scan.create()
+ * akan panggil fungsi getByDCode() dari diseases.model.js
+ * d_code = disease.data.data.result
+ * lalu ngirim response dengan format (ganti isi res.json())
+ * {
+ * message: STRING,
+ * image_url: STRING,
+ * scan_id: STRING,
+ * data: {
+ *  d_name: STRING,
+ *  d_code: STRING,
+ *  d_description: STRING,
+ *  d_treatment: STRING,
+ *  d_category: STRING
+ *  }
+ * }
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 async function addScan(req, res) {
     let {image_url} = req.body
     //test
@@ -18,7 +40,7 @@ async function addScan(req, res) {
         };
         const disease = await axios.post("https://skinlyze-ml-249825855363.asia-southeast2.run.app/predict", JSON.stringify({"image_url":image_url}), customConfig)
         console.log({image_url, 'response': disease.data})
-        scan.create(image_url, disease.data.data.result) 
+        const scan_id = scan.create(image_url, disease.data.data.result) 
         res.status(201).json({ message: "Created" })
     }catch{
 

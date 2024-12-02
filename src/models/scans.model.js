@@ -27,6 +27,7 @@ async function create(image_url, disease) {
     console.log({id, data})
     const res = await firebase.db.collection("scans").doc(id).set(data)
     console.log("Data added")
+    return id
 }
 
 async function update() {}
