@@ -16,7 +16,7 @@ async function getById(id) {
 }
 
 async function create(image_url, disease) {
-    const created_at = new Date("").toISOString()
+    const created_at = new Date().toISOString()
     const id = created_at + "_" + uuid.v4()
 
     const data = {
@@ -24,9 +24,9 @@ async function create(image_url, disease) {
       "created_at":created_at,  
       "disease": disease
     }
-    console.log(id)
-    console.log(data)
+    console.log({id, data})
     const res = await firebase.db.collection("scans").doc(id).set(data)
+    console.log("Data added")
 }
 
 async function update() {}
