@@ -16,6 +16,18 @@ async function getByName(name) {
 
 async function getById() {}
 
+/**
+ * TODO
+ * buat implementasi seperti fungsi getByName tapi ganti 'name' 
+ * dengan 'd_code'
+ * 
+ * @param {*} DCode 
+ * @returns 
+ */
+async function getByDCode(DCode) {
+  return
+}
+
 async function create() {}
 
 async function update() {}
