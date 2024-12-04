@@ -15,12 +15,12 @@ const {
 // "Firebase Admin SDK Administrator Service Agent"
 // dan "Service Account Token Creator"
 // file berada di folder src/services
-const serviceAccount = require("./skinlyze-dev-firebase-adminsdk.json");
+const serviceAccount = require("./hypnotic-pier-442106-c5-firebase-adminsdk-cu7c3-a7e335d026.json");
 
 initializeApp({
   credential: cert(serviceAccount),
 });
 
-const db = getFirestore();
+const db = getFirestore("skinlyze-database");
 
 module.exports = { db };
