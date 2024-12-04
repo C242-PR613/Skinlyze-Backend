@@ -31,7 +31,7 @@ async function addScan(req, res) {
       },
     };
     const diseaseResponse = await axios.post(
-      process.env.ML_PREDICT_ENDPOINT,
+      "https://skinlyze-ml-249825855363.asia-southeast2.run.app/predict",
       JSON.stringify({ image_url: image_url }),
       customConfig
     );
