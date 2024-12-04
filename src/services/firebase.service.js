@@ -1,26 +1,12 @@
-const {
-  initializeApp,
-  applicationDefault,
-  cert,
-} = require("firebase-admin/app");
-const {
-  getFirestore,
-  Timestamp,
-  FieldValue,
-  Filter,
-} = require("firebase-admin/firestore");
+const { initializeApp, cert } = require("firebase-admin/app");
+const { getFirestore } = require("firebase-admin/firestore");
 
-
-// api key service account dengan role 
-// "Firebase Admin SDK Administrator Service Agent"
-// dan "Service Account Token Creator"
-// file berada di folder src/services
-const serviceAccount = require("./hypnotic-pier-442106-c5-firebase-adminsdk-cu7c3-a7e335d026.json");
+const serviceAccount = require(process.env.DB_PRIVATE_KEY_PATH);
 
 initializeApp({
   credential: cert(serviceAccount),
 });
 
-const db = getFirestore("skinlyze-database");
+const db = getFirestore(process.env.DB_NAME);
 
 module.exports = { db };
