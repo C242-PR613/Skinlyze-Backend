@@ -1,12 +1,10 @@
 const { initializeApp, cert } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
 
-const serviceAccount = require(process.env.DB_PRIVATE_KEY_PATH);
-
 initializeApp({
-  credential: cert(serviceAccount),
+  credential: applicationDefault()
 });
 
-const db = getFirestore(process.env.DB_NAME);
+const db = getFirestore("skinlyze-database");
 
 module.exports = { db };

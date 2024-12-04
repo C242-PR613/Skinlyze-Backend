@@ -4,7 +4,8 @@ import fs from "fs";
 let res = []
 let res2 = []
 let i_start = 524
-const length = 620-524; // Length of the array
+let i_end = 999
+const length = i_end-i_start; // Length of the array
 const array = Array.from({ length }, (_, index) => index + 1);
 const customConfig = {
     headers: {
@@ -13,12 +14,17 @@ const customConfig = {
 };
 const a = async()=>{
     for await(const i of array) {
-    if(i_start+i === 550) continue
-    let image_url = "https://raw.githubusercontent.com/C242-PR613/Skinlyze-ML/refs/heads/main/Data%20Test/ISIC_0034"+ (i_start+i) + ".jpg"
-    let temp = await axios.post("https://skinlyze-ml-249825855363.asia-southeast2.run.app/predict", JSON.stringify({"image_url":image_url}), customConfig)
-    res.push({"image":(i_start+i),"data":temp.data.data})
-    res2.push({"image":(i_start+i),"result":temp.data.data.result})
-    console.log(i_start+i)
+      try {
+        let image_url = "https://raw.githubusercontent.com/C242-PR613/Skinlyze-ML/refs/heads/main/Data%20Test/ISIC_0034"+ (i_start+i) + ".jpg"
+        let temp = await axios.post("https://skinlyze-ml-249825855363.asia-southeast2.run.app/predict", JSON.stringify({"image_url":image_url}), customConfig)
+        res.push({"image":(i_start+i),"data":temp.data.data})
+        res2.push({"image":(i_start+i),"result":temp.data.data.result})
+        console.log(i_start+i)
+      } catch (error) {
+        console.log(`${i_start+i}: error`)
+        res.push({"image":(i_start+i),"data":"error!"})
+        res2.push({"image":(i_start+i),"result":"error!"})
+      }
 }}
 
 await a()
