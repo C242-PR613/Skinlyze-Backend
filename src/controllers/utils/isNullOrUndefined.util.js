@@ -1,5 +1,5 @@
 function isNullOrUndefined(params) {
-    return params === undefined || params === null
+  return params === undefined || params === null;
 }
 
-module.exports = isNullOrUndefined
+module.exports = isNullOrUndefined;

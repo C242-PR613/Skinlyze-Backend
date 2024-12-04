@@ -8,17 +8,17 @@ async function getByName(name) {
     return;
   } else {
     snapshot.forEach((doc) => {
-      console.log("Document data:", doc.data());
+      console.log({ result: doc.data() });
     });
   }
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))[0];
 }
 
-async function getById() { }
+async function getById() {}
 
 /**
- * @param {*} DCode 
- * @returns 
+ * @param {*} DCode
+ * @returns
  */
 async function getByDCode(DCode) {
   const disease = firebase.db.collection("diseases");
@@ -28,17 +28,17 @@ async function getByDCode(DCode) {
     return;
   } else {
     snapshot.forEach((doc) => {
-      console.log("Document data:", doc.data());
+      console.log({ result: doc.data() });
     });
   }
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))[0];
 }
 
-async function create() { }
+async function create() {}
 
-async function update() { }
+async function update() {}
 
-async function remove() { }
+async function remove() {}
 
 module.exports = {
   getById,
@@ -48,4 +48,3 @@ module.exports = {
   update,
   remove,
 };
-
