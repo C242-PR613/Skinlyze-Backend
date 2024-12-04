@@ -54,7 +54,7 @@ async function addScan(req, res) {
                 d_code: diseaseDetails.d_code,
                 d_description: diseaseDetails.description,
                 d_treatment: diseaseDetails.treatment,
-                d_category: diseaseDetails.symptoms,
+                d_symptoms: diseaseDetails.symptoms,
             },
         });
     } catch (error) {
