@@ -11,33 +11,41 @@ async function getByName(name) {
       console.log("Document data:", doc.data());
     });
   }
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))[0];
 }
 
-async function getById() {}
+async function getById() { }
 
 /**
- * TODO
- * buat implementasi seperti fungsi getByName tapi ganti 'name' 
- * dengan 'd_code'
- * 
  * @param {*} DCode 
  * @returns 
  */
 async function getByDCode(DCode) {
-  return
+  const disease = firebase.db.collection("diseases");
+  const snapshot = await disease.where("d_code", "==", DCode).get();
+  if (snapshot.empty) {
+    console.log("No such document!");
+    return;
+  } else {
+    snapshot.forEach((doc) => {
+      console.log("Document data:", doc.data());
+    });
+  }
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))[0];
 }
 
-async function create() {}
+async function create() { }
 
-async function update() {}
+async function update() { }
 
-async function remove() {}
+async function remove() { }
 
 module.exports = {
   getById,
   getByName,
+  getByDCode,
   create,
   update,
   remove,
 };
+

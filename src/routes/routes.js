@@ -4,7 +4,7 @@ const diseaseController = require("../controllers/diseases.controller");
 const scanController = require("../controllers/scans.controller.js")
 
 router.get("/", async(req, res) => {
-  res.status(200).json({ message: "success", data });
+  res.status(200).json({ message: "success"});
 });
 
 router.get("/disease/:name", diseaseController.getDisease);

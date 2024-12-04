@@ -1,58 +1,77 @@
-const scan = require("../models/scans.model")
-const isNullOrUndefined = require("./utils/isNullOrUndefined.util")
-const axios = require("axios")
+const scan = require("../models/scans.model");
+const diseaseModel = require("../models/diseases.model");
+const isNullOrUndefined = require("./utils/isNullOrUndefined.util");
+const axios = require("axios");
+const { json } = require("express");
 
 /**
- * TODO
- * tambah supaya setelah panggil scan.create()
- * akan panggil fungsi getByDCode() dari diseases.model.js
- * d_code = disease.data.data.result
- * lalu ngirim response dengan format (ganti isi res.json())
- * {
- * message: STRING,
- * image_url: STRING,
- * scan_id: STRING,
- * data: {
- *  d_name: STRING,
- *  d_code: STRING,
- *  d_description: STRING,
- *  d_treatment: STRING,
- *  d_category: STRING
- *  }
- * }
- * 
  * @param {*} req 
  * @param {*} res 
  */
 async function addScan(req, res) {
-    let {image_url} = req.body
-    //test
-    const IMG_URL = "https://storage.googleapis.com/skinlyze-image-scan/ISIC_0034526.jpg"
-    if(isNullOrUndefined(image_url)){
-      image_url = IMG_URL
+    const type = req.is('application/json')
+    if(type === false){
+        res.status(415).json({message:"Failed, make sure the request Header have Content-Type: application/json"})
+        return
     }
-    //test-end
-    try{
+    const { image_url } = req.body;
+
+    if (isNullOrUndefined(image_url)) {
+        req.status(400).json({message:"Failed, Bad Request"})
+        return
+    }
+
+    try {
+        // API request to get disease data
         const customConfig = {
             headers: {
-            'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+            },
         };
-        const disease = await axios.post("https://skinlyze-ml-249825855363.asia-southeast2.run.app/predict", JSON.stringify({"image_url":image_url}), customConfig)
-        console.log({image_url, 'response': disease.data})
-        const scan_id = scan.create(image_url, disease.data.data.result) 
-        res.status(201).json({ message: "Created" })
-    }catch{
+        const diseaseResponse = await axios.post(
+            "https://skinlyze-ml-249825855363.asia-southeast2.run.app/predict",
+            JSON.stringify({ "image_url": image_url }),
+            customConfig
+        );
 
+        const diseaseData = diseaseResponse.data.data.result;
+        console.log(diseaseData)
+
+        // Create scan entry
+        const scan_id = await scan.create(image_url, diseaseData);
+
+        // Fetch detailed disease info by d_code
+        const diseaseDetails = await diseaseModel.getByDCode(diseaseData);
+        console.log(diseaseDetails)
+
+        // Format the response
+        res.status(201).json({
+            message: "Scan created successfully",
+            image_url,
+            scan_id,
+            data: {
+                d_name: diseaseDetails.name,
+                d_code: diseaseDetails.d_code,
+                d_description: diseaseDetails.description,
+                d_treatment: diseaseDetails.treatment,
+                d_category: diseaseDetails.symptoms,
+            },
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 }
 
 async function getScan(req, res) {
-    const {id} = req.params
-    console.log(id)
-    const data = await scan.getById(id)
-    if(data === undefined || data === null) res.status(404).json({message: "Failed"})
-    res.status(200).json({ message: "Success", data });
+    const { id } = req.params;
+    console.log(id);
+    const data = await scan.getById(id);
+    if (isNullOrUndefined(data)) {
+        res.status(404).json({ message: "Failed" });
+    } else {
+        res.status(200).json({ message: "Success", data });
+    }
 }
 
-module.exports = {addScan, getScan}
+module.exports = { addScan, getScan };
