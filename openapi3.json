@@ -1,0 +1,245 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Skinlyze",
+    "description": "Skinlyze backend API",
+    "termsOfService": "http://",
+    "contact": {
+      "name": "C242-PR613 Team",
+      "email": "c242.pr613@gmail.com",
+      "url": ""
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/",
+      "description": "Local server"
+    },
+    {
+      "url": "https://skinlyze-backend-249825855363.asia-southeast2.run.app",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/scan/{scan_id}": {
+      "get": {
+        "description": "Get scan",
+        "operationId": "getScan",
+        "parameters": [
+          {
+            "name": "scan_id",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/scan_id"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Scan were obtained",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/scan"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Scan not found",
+                  "internal_code": "scan_not_found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scan": {
+      "post": {
+        "description": "Create scan",
+        "operationId": "addScan",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/scan_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+            "201": {
+              "description": "Scan added",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "example": "Failed, make sure the request Header have Content-Type: application/json"
+                      },
+                      "image_url": {
+                        "$ref": "#/components/schemas/image_url"
+                      },
+                      "scan_id": {
+                        "$ref": "#/components/schemas/scan_id"
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/scan_post_data"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "415": {
+              "description": "Wrong Content-Type",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "example": "Failed, make sure the request Header have Content-Type: application/json"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  },
+                  "example": {
+                    "message": "Missing image_url in Body",
+                    "internal_code": "bad_request"
+                  }
+                }
+              }
+            }
+          }
+      }
+    }
+  },
+    "components": {
+    "schemas": {
+      "image_url": {
+        "type": "string",
+        "description": "Scan image url from user",
+        "example": "https://example.com/image.jpg"
+      },
+      "created_at": {
+        "type": "string",
+        "example": "22-12-24"
+      },
+      "disease": {
+        "type": "string",
+        "example": "bcc"
+      },
+      "scan_id": {
+        "type": "string",
+        "example": "22-12-24-dasmlkdmkasn"
+      },
+      "scan": {
+        "type": "object",
+        "properties": {
+          "image_url": {
+            "$ref": "#/components/schemas/image_url"
+          },
+          "created_at": {
+            "$ref": "#/components/schemas/created_at"
+          },
+          "disease": {
+            "$ref": "#/components/schemas/disease"
+          }
+        }
+      },
+      "scan_post": {
+        "type": "object",
+        "properties": {
+          "image_url": {
+            "$ref": "#/components/schemas/image_url"
+          }
+        }
+      },
+      "scan_post_data": {
+        "type": "object",
+        "properties": {
+          "d_name": {
+            "type": "string",
+            "example": "Melanoma"
+          },
+          "d_code": {
+            "type": "string",
+            "example": "bcc"
+          },
+          "d_description": {
+            "type": "string",
+            "example": "Melanoma adalah penyakit...."
+          },
+          "d_treatment": {
+            "type": "array",
+            "items": {
+              "item": {
+                "type": "string",
+                "example": "treatment 1 adalah..."
+              }
+            },
+            "example": [
+              "treatment 1",
+              "treatment 2"
+            ],
+            "minItems": 1
+          },
+          "d_symptoms": {
+            "type": "array",
+            "items": {
+              "item": {
+                "type": "string",
+                "example": "symptoms 1 adalah..."
+              }
+            },
+            "example": [
+              "symptoms 1",
+              "symptoms 2"
+            ],
+            "minItems": 1
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "internal_code": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

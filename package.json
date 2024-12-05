@@ -18,10 +18,11 @@
   },
   "homepage": "https://github.com/ozannaufal15/Skinlyze-Backend#readme",
   "dependencies": {
+    "axios": "^1.7.8",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "firebase-admin": "^13.0.1",
-    "uuid": "^11.0.3",
-    "axios": "^1.7.8"
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^11.0.3"
   }
 }

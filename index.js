@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 8080;
 const router = require("./src/routes/routes");
+const swaggerUi = require('swagger-ui-express');
+const openApiDocumentation = require('./openapi3.json');
 
 app.use(bodyParser.json());
 app.use(
@@ -12,7 +14,11 @@ app.use(
   })
 );
 
+
+
 app.use("/", router);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
