@@ -26,6 +26,43 @@
     }
   ],
   "paths": {
+    "/upload": {
+      "post": {
+        "summary": "Uploads a file.",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Create scan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "image": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/scan/{scan_id}": {
       "get": {
         "description": "Get scan",
@@ -84,66 +121,66 @@
           "required": true
         },
         "responses": {
-            "201": {
-              "description": "Scan added",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "type": "string",
-                        "example": "Failed, make sure the request Header have Content-Type: application/json"
-                      },
-                      "image_url": {
-                        "$ref": "#/components/schemas/image_url"
-                      },
-                      "scan_id": {
-                        "$ref": "#/components/schemas/scan_id"
-                      },
-                      "data": {
-                        "$ref": "#/components/schemas/scan_post_data"
-                      }
+          "201": {
+            "description": "Scan added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Failed, make sure the request Header have Content-Type: application/json"
+                    },
+                    "image_url": {
+                      "$ref": "#/components/schemas/image_url"
+                    },
+                    "scan_id": {
+                      "$ref": "#/components/schemas/scan_id"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/scan_post_data"
                     }
                   }
                 }
               }
-            },
-            "415": {
-              "description": "Wrong Content-Type",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "type": "string",
-                        "example": "Failed, make sure the request Header have Content-Type: application/json"
-                      }
-                    }
-                  }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Missing image_url in Body",
+                  "internal_code": "bad_request"
                 }
               }
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Error"
-                  },
-                  "example": {
-                    "message": "Missing image_url in Body",
-                    "internal_code": "bad_request"
+            }
+          },
+          "415": {
+            "description": "Wrong Content-Type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Failed, make sure the request Header have Content-Type: application/json"
+                    }
                   }
                 }
               }
             }
           }
+        }
       }
     }
   },
-    "components": {
+  "components": {
     "schemas": {
       "image_url": {
         "type": "string",
