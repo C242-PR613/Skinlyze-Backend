@@ -6,6 +6,7 @@ const port = 8080;
 const router = require("./src/routes/routes");
 const swaggerUi = require('swagger-ui-express');
 const openApiDocumentation = require('./openapi3.json');
+const cors = require("cors")
 
 app.use(bodyParser.json());
 app.use(
@@ -14,7 +15,7 @@ app.use(
   })
 );
 
-
+app.use(cors())
 
 app.use("/", router);
 
@@ -29,5 +30,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, "0.0.0.0", () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`App listening at http://localhost:${port}`);
 });
