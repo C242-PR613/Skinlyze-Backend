@@ -6,7 +6,19 @@
 
 ## How To Replicate Project
 
-### 1. Clone the repository
+#### 1. Clone the repository
 ```bash
-git clone 
+git clone https://github.com/Skinlyze/Skinlyze-Backend.git
+```
+
+#### 2. Install Dependencies
+```bash
+npm install
+```
+
+#### 3. Rename `.env.example` to `.env`
+
+#### 4. Edit `.env` file
+```txt
+
 ```
