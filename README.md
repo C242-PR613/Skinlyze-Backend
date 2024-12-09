@@ -18,7 +18,7 @@
 
 ## How To Replicate Project
 
-#### 1. Clone the repository
+#### 1. Clone the Repository
 ```bash
 git clone https://github.com/Skinlyze/Skinlyze-Backend.git
 ```
@@ -30,7 +30,7 @@ npm install
 
 #### 3. Rename `.env.example` to `.env`
 
-#### 4. Edit `.env` file
+#### 4. Edit `.env` File
 ```txt
 ML_PREDICT_ENDPOINT=[ML Model predictor URL]
 DB_PRIVATE_KEY_PATH=[Path to Service Account Key]
@@ -38,7 +38,7 @@ PORT="8080"
 DB_NAME="(default)"
 BUCKET_NAME=[cloud storage bucket name]
 ```
-> **NOTE:** Instruction for deploying ML predictor can be found here: <https://placeholder>
+> **NOTE:** Instruction for deploying ML predictor can be found here: <https://github.com/Skinlyze/Skinlyze-ML/blob/main/README.md#how-to-replicate-project>
 
 > Instruction on how to get Service Account key can be found here: <https://firebase.google.com/docs/admin/setup#initialize_the_sdk_in_non-google_environments>
 
