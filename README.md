@@ -33,10 +33,10 @@ npm install
 #### 4. Edit `.env` file
 ```txt
 ML_PREDICT_ENDPOINT=[ML Model predictor URL]
-DB_PRIVATE_KEY_PATH="[Path to Service Account Key]"
+DB_PRIVATE_KEY_PATH=[Path to Service Account Key]
 PORT="8080"
 DB_NAME="(default)"
-BUCKET_NAME="cloud-storage-bucket-name"
+BUCKET_NAME=[cloud storage bucket name]
 ```
 > **NOTE:** Instruction for deploying ML predictor can be found here: <https://placeholder>
 
