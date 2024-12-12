@@ -48,3 +48,6 @@ BUCKET_NAME=[cloud storage bucket name]
 ```bash
 npm start
 ```
+
+## License
+[MIT](LICENSE) (c) 2024 Skinlyze
